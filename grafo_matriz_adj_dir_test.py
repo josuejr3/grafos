@@ -75,6 +75,403 @@ class TestGrafo(unittest.TestCase):
         self.g_e.adiciona_aresta('9', 'E', 'A')
         self.g_e.adiciona_aresta('11', 'E', 'B')
 
+        # Matrizes Warshall
+
+        # Matriz Grafo da Paraíba
+        self.g_p_matriz = self.cria_matriz(self.g_p)
+        self.g_p_matriz[0][1] = 1
+        self.g_p_matriz[0][2] = 1
+        self.g_p_matriz[1][2] = 1
+        self.g_p_matriz[3][1] = 1
+        self.g_p_matriz[3][2] = 1
+        self.g_p_matriz[4][1] = 1
+        self.g_p_matriz[4][2] = 1
+        self.g_p_matriz[4][5] = 1
+        self.g_p_matriz[4][6] = 1
+        self.g_p_matriz[5][1] = 1
+        self.g_p_matriz[5][2] = 1
+        self.g_p_matriz[5][6] = 1
+
+        # Matriz Grafo da Paraíba sem Paralelas
+        self.g_p_sem_paralelas_matriz = self.cria_matriz(self.g_p_sem_paralelas)
+        self.g_p_sem_paralelas_matriz[0][1] = 1
+        self.g_p_sem_paralelas_matriz[0][2] = 1
+        self.g_p_sem_paralelas_matriz[1][2] = 1
+        self.g_p_sem_paralelas_matriz[3][1] = 1
+        self.g_p_sem_paralelas_matriz[3][2] = 1
+        self.g_p_sem_paralelas_matriz[4][1] = 1
+        self.g_p_sem_paralelas_matriz[4][2] = 1
+        self.g_p_sem_paralelas_matriz[4][5] = 1
+        self.g_p_sem_paralelas_matriz[4][6] = 1
+        self.g_p_sem_paralelas_matriz[5][1] = 1
+        self.g_p_sem_paralelas_matriz[5][2] = 1
+        self.g_p_sem_paralelas_matriz[5][6] = 1
+
+        # Grafo Completo K4
+        self.g_k4 = MeuGrafo()
+        self.g_k4.adiciona_vertice("A")
+        self.g_k4.adiciona_vertice("B")
+        self.g_k4.adiciona_vertice("C")
+        self.g_k4.adiciona_vertice("D")
+        self.g_k4.adiciona_aresta("a1", "A", "B")
+        self.g_k4.adiciona_aresta("a2", "A", "C")
+        self.g_k4.adiciona_aresta("a3", "A", "D")
+        self.g_k4.adiciona_aresta("a4", "C", "B")
+        self.g_k4.adiciona_aresta("a5", "D", "B")
+        self.g_k4.adiciona_aresta("a6", "D", "C")
+
+        # Matriz K4
+        self.g_k4_matriz = self.cria_matriz(self.g_k4)
+        self.g_k4_matriz[0][1] = 1
+        self.g_k4_matriz[0][2] = 1
+        self.g_k4_matriz[0][3] = 1
+        self.g_k4_matriz[2][1] = 1
+        self.g_k4_matriz[3][1] = 1
+        self.g_k4_matriz[3][2] = 1
+
+        # Grafo com ciclos
+        self.g_c_c = MeuGrafo()
+        self.g_c_c.adiciona_vertice("U")
+        self.g_c_c.adiciona_vertice("V")
+        self.g_c_c.adiciona_vertice("W")
+        self.g_c_c.adiciona_vertice("X")
+        self.g_c_c.adiciona_vertice("Y")
+        self.g_c_c.adiciona_aresta("a1", "U", "Y")
+        self.g_c_c.adiciona_aresta("a2", "Y", "V")
+        self.g_c_c.adiciona_aresta("a3", "V", "U")
+        self.g_c_c.adiciona_aresta("a4", "W", "X")
+
+        self.g_c_c_matriz = self.cria_matriz(self.g_c_c)
+        self.g_c_c_matriz[0][0] = 1
+        self.g_c_c_matriz[0][1] = 1
+        self.g_c_c_matriz[0][4] = 1
+        self.g_c_c_matriz[1][0] = 1
+        self.g_c_c_matriz[1][1] = 1
+        self.g_c_c_matriz[1][4] = 1
+        self.g_c_c_matriz[2][3] = 1
+        self.g_c_c_matriz[4][0] = 1
+        self.g_c_c_matriz[4][1] = 1
+        self.g_c_c_matriz[4][4] = 1
+
+        # Grafo com laço e arestas paralelas
+        self.grafo_ap_l_1 = MeuGrafo()
+        self.grafo_ap_l_1.adiciona_vertice("A")
+        self.grafo_ap_l_1.adiciona_vertice("B")
+        self.grafo_ap_l_1.adiciona_vertice("C")
+        self.grafo_ap_l_1.adiciona_vertice("D")
+        self.grafo_ap_l_1.adiciona_vertice("E")
+        self.grafo_ap_l_1.adiciona_aresta("a1", "A", "B")
+        self.grafo_ap_l_1.adiciona_aresta("a2", "A", "C")
+        self.grafo_ap_l_1.adiciona_aresta("a3", "B", "A")
+        self.grafo_ap_l_1.adiciona_aresta("a4", "B", "C")
+        self.grafo_ap_l_1.adiciona_aresta("a5", "C", "C")
+        self.grafo_ap_l_1.adiciona_aresta("a6", "D", "D")
+        self.grafo_ap_l_1.adiciona_aresta("a7", "D", "A")
+        self.grafo_ap_l_1.adiciona_aresta("a8", "E", "B")
+
+        self.grafo_ap_l_1_matriz = self.cria_matriz(self.grafo_ap_l_1)
+        self.grafo_ap_l_1_matriz[0][0] = 1
+        self.grafo_ap_l_1_matriz[0][1] = 1
+        self.grafo_ap_l_1_matriz[0][2] = 1
+        self.grafo_ap_l_1_matriz[1][0] = 1
+        self.grafo_ap_l_1_matriz[1][1] = 1
+        self.grafo_ap_l_1_matriz[1][2] = 1
+        self.grafo_ap_l_1_matriz[2][2] = 1
+        self.grafo_ap_l_1_matriz[3][0] = 1
+        self.grafo_ap_l_1_matriz[3][1] = 1
+        self.grafo_ap_l_1_matriz[3][2] = 1
+        self.grafo_ap_l_1_matriz[3][3] = 1
+        self.grafo_ap_l_1_matriz[4][0] = 1
+        self.grafo_ap_l_1_matriz[4][1] = 1
+        self.grafo_ap_l_1_matriz[4][2] = 1
+
+        self.g_e_matriz = self.cria_matriz(self.g_e)
+        self.g_e_matriz[0][0] = 1
+        self.g_e_matriz[0][1] = 1
+        self.g_e_matriz[0][2] = 1
+        self.g_e_matriz[0][3] = 1
+        self.g_e_matriz[0][4] = 1
+        self.g_e_matriz[2][0] = 1
+        self.g_e_matriz[2][1] = 1
+        self.g_e_matriz[2][2] = 1
+        self.g_e_matriz[2][3] = 1
+        self.g_e_matriz[2][4] = 1
+        self.g_e_matriz[3][0] = 1
+        self.g_e_matriz[3][1] = 1
+        self.g_e_matriz[3][2] = 1
+        self.g_e_matriz[3][3] = 1
+        self.g_e_matriz[3][4] = 1
+        self.g_e_matriz[4][0] = 1
+        self.g_e_matriz[4][1] = 1
+        self.g_e_matriz[4][2] = 1
+        self.g_e_matriz[4][3] = 1
+        self.g_e_matriz[4][4] = 1
+
+        # Grafo com varios laços
+        self.g_c_l_2 = MeuGrafo()
+        self.g_c_l_2.adiciona_vertice("A")
+        self.g_c_l_2.adiciona_vertice("B")
+        self.g_c_l_2.adiciona_vertice("C")
+        self.g_c_l_2.adiciona_vertice("D")
+        self.g_c_l_2.adiciona_vertice("E")
+        self.g_c_l_2.adiciona_vertice("F")
+        self.g_c_l_2.adiciona_aresta("a1", "A", "A")
+        self.g_c_l_2.adiciona_aresta("a2", "A", "B")
+        self.g_c_l_2.adiciona_aresta("a3", "B", "C")
+        self.g_c_l_2.adiciona_aresta("a4", "C", "B")
+        self.g_c_l_2.adiciona_aresta("a5", "C", "E")
+        self.g_c_l_2.adiciona_aresta("a6", "C", "D")
+        self.g_c_l_2.adiciona_aresta("a7", "D", "D")
+        self.g_c_l_2.adiciona_aresta("a8", "E", "E")
+
+        self.g_c_l_2_matriz = self.cria_matriz(self.g_c_l_2)
+        self.g_c_l_2_matriz[0][0] = 1
+        self.g_c_l_2_matriz[0][1] = 1
+        self.g_c_l_2_matriz[0][2] = 1
+        self.g_c_l_2_matriz[0][3] = 1
+        self.g_c_l_2_matriz[0][4] = 1
+        self.g_c_l_2_matriz[1][1] = 1
+        self.g_c_l_2_matriz[1][2] = 1
+        self.g_c_l_2_matriz[1][3] = 1
+        self.g_c_l_2_matriz[1][4] = 1
+        self.g_c_l_2_matriz[2][1] = 1
+        self.g_c_l_2_matriz[2][2] = 1
+        self.g_c_l_2_matriz[2][3] = 1
+        self.g_c_l_2_matriz[2][4] = 1
+        self.g_c_l_2_matriz[3][3] = 1
+        self.g_c_l_2_matriz[4][4] = 1
+
+        self.g_l1_matriz = self.cria_matriz(self.g_l1)
+        self.g_l1_matriz[0][0] = 1
+        self.g_l1_matriz[1][0] = 1
+
+        self.g_ap_l_2 = MeuGrafo()
+        self.g_ap_l_2.adiciona_vertice("A")
+        self.g_ap_l_2.adiciona_vertice("B")
+        self.g_ap_l_2.adiciona_vertice("C")
+        self.g_ap_l_2.adiciona_vertice("D")
+        self.g_ap_l_2.adiciona_vertice("E")
+        self.g_ap_l_2.adiciona_vertice("F")
+        self.g_ap_l_2.adiciona_vertice("G")
+        self.g_ap_l_2.adiciona_vertice("H")
+        self.g_ap_l_2.adiciona_aresta("a1", "A", "B")
+        self.g_ap_l_2.adiciona_aresta("a2", "A", "D")
+        self.g_ap_l_2.adiciona_aresta("a3", "A", "E")
+        self.g_ap_l_2.adiciona_aresta("a4", "B", "E")
+        self.g_ap_l_2.adiciona_aresta("a5", "C", "B")
+        self.g_ap_l_2.adiciona_aresta("a6", "C", "G")
+        self.g_ap_l_2.adiciona_aresta("a7", "D", "A")
+        self.g_ap_l_2.adiciona_aresta("a8", "D", "C")
+        self.g_ap_l_2.adiciona_aresta("a9", "D", "F")
+        self.g_ap_l_2.adiciona_aresta("a10", "F", "F")
+        self.g_ap_l_2.adiciona_aresta("a11", "G", "D")
+        self.g_ap_l_2.adiciona_aresta("a12", "G", "G")
+        self.g_ap_l_2.adiciona_aresta("a13", "H", "E")
+        self.g_ap_l_2.adiciona_aresta("a14", "H", "H")
+
+
+        # Matriz grafo g_ap_l_2
+        self.g_ap_l_2_matriz = self.cria_matriz(self.g_ap_l_2)
+        self.g_ap_l_2_matriz[0][0] = 1
+        self.g_ap_l_2_matriz[0][1] = 1
+        self.g_ap_l_2_matriz[0][2] = 1
+        self.g_ap_l_2_matriz[0][3] = 1
+        self.g_ap_l_2_matriz[0][4] = 1
+        self.g_ap_l_2_matriz[0][5] = 1
+        self.g_ap_l_2_matriz[0][6] = 1
+        self.g_ap_l_2_matriz[1][4] = 1
+        self.g_ap_l_2_matriz[2][0] = 1
+        self.g_ap_l_2_matriz[2][1] = 1
+        self.g_ap_l_2_matriz[2][2] = 1
+        self.g_ap_l_2_matriz[2][3] = 1
+        self.g_ap_l_2_matriz[2][4] = 1
+        self.g_ap_l_2_matriz[2][5] = 1
+        self.g_ap_l_2_matriz[2][6] = 1
+        self.g_ap_l_2_matriz[3][0] = 1
+        self.g_ap_l_2_matriz[3][1] = 1
+        self.g_ap_l_2_matriz[3][2] = 1
+        self.g_ap_l_2_matriz[3][3] = 1
+        self.g_ap_l_2_matriz[3][4] = 1
+        self.g_ap_l_2_matriz[3][5] = 1
+        self.g_ap_l_2_matriz[3][6] = 1
+        self.g_ap_l_2_matriz[5][5] = 1
+        self.g_ap_l_2_matriz[6][0] = 1
+        self.g_ap_l_2_matriz[6][1] = 1
+        self.g_ap_l_2_matriz[6][2] = 1
+        self.g_ap_l_2_matriz[6][3] = 1
+        self.g_ap_l_2_matriz[6][4] = 1
+        self.g_ap_l_2_matriz[6][5] = 1
+        self.g_ap_l_2_matriz[6][6] = 1
+        self.g_ap_l_2_matriz[7][4] = 1
+        self.g_ap_l_2_matriz[7][7] = 1
+
+        # grafo arestas paralelas e laços
+        self.g_ap_l_3 = MeuGrafo()
+        self.g_ap_l_3.adiciona_vertice("A")
+        self.g_ap_l_3.adiciona_vertice("B")
+        self.g_ap_l_3.adiciona_vertice("C")
+        self.g_ap_l_3.adiciona_aresta('a1', 'A', 'A')
+        self.g_ap_l_3.adiciona_aresta('a2', 'B', 'B')
+        self.g_ap_l_3.adiciona_aresta('a3', 'C', 'C')
+        self.g_ap_l_3.adiciona_aresta('a4', 'A', 'B')
+        self.g_ap_l_3.adiciona_aresta('a5', 'B', 'A')
+        self.g_ap_l_3.adiciona_aresta('a6', 'B', 'C')
+        self.g_ap_l_3.adiciona_aresta('a7', 'C', 'B')
+        self.g_ap_l_3.adiciona_aresta('a8', 'C', 'A')
+        self.g_ap_l_3.adiciona_aresta('a9', 'A', 'C')
+
+        self.g_ap_l_3_matriz = self.cria_matriz(self.g_ap_l_3)
+        self.g_ap_l_3_matriz[0][0] = 1
+        self.g_ap_l_3_matriz[0][1] = 1
+        self.g_ap_l_3_matriz[0][2] = 1
+        self.g_ap_l_3_matriz[1][0] = 1
+        self.g_ap_l_3_matriz[1][1] = 1
+        self.g_ap_l_3_matriz[1][2] = 1
+        self.g_ap_l_3_matriz[2][0] = 1
+        self.g_ap_l_3_matriz[2][1] = 1
+        self.g_ap_l_3_matriz[2][2] = 1
+
+        # Grafos Dijkstra
+        self.grafo_1 = MeuGrafo()
+        self.grafo_1.adiciona_vertice("A")
+        self.grafo_1.adiciona_vertice("B")
+        self.grafo_1.adiciona_vertice("C")
+        self.grafo_1.adiciona_vertice("D")
+        self.grafo_1.adiciona_vertice("E")
+        self.grafo_1.adiciona_aresta("a1", "A", "C", 5)
+        self.grafo_1.adiciona_aresta("a2", "A", "B", 2)
+        self.grafo_1.adiciona_aresta("a3", "B", "C", 1)
+        self.grafo_1.adiciona_aresta("a4", "B", "D", 4)
+        self.grafo_1.adiciona_aresta("a5", "C", "E", 3)
+        self.grafo_1.adiciona_aresta("a6", "D", "E", 2)
+
+        self.grafo_2 = MeuGrafo()
+        self.grafo_2.adiciona_vertice("A")
+        self.grafo_2.adiciona_vertice("B")
+        self.grafo_2.adiciona_vertice("C")
+        self.grafo_2.adiciona_vertice("D")
+        self.grafo_2.adiciona_vertice("E")
+        self.grafo_2.adiciona_vertice("F")
+        self.grafo_2.adiciona_vertice("G")
+        self.grafo_2.adiciona_vertice("H")
+        self.grafo_2.adiciona_aresta('a1', 'A', 'B', 6)
+        self.grafo_2.adiciona_aresta('a2', 'A', 'C', 4)
+        self.grafo_2.adiciona_aresta('a3', 'B', 'D', 5)
+        self.grafo_2.adiciona_aresta('a4', 'B', 'H', 2)
+        self.grafo_2.adiciona_aresta('a5', 'C', 'D', 3)
+        self.grafo_2.adiciona_aresta('a6', 'C', 'B', 1)
+        self.grafo_2.adiciona_aresta('a7', 'D', 'E', 3)
+        self.grafo_2.adiciona_aresta('a8', 'D', 'F', 1)
+        self.grafo_2.adiciona_aresta('a9', 'F', 'G', 1)
+        self.grafo_2.adiciona_aresta('a10', 'G', 'E', 2)
+        self.grafo_2.adiciona_aresta('a11', 'H', 'G', 3)
+
+        self.grafo_3 = MeuGrafo()
+        self.grafo_3.adiciona_vertice("A")
+        self.grafo_3.adiciona_vertice("B")
+        self.grafo_3.adiciona_vertice("C")
+        self.grafo_3.adiciona_vertice("D")
+        self.grafo_3.adiciona_vertice("E")
+        self.grafo_3.adiciona_vertice("F")
+        self.grafo_3.adiciona_aresta("a1", "A", "B", 2)
+        self.grafo_3.adiciona_aresta("a2", "A", "C", 4)
+        self.grafo_3.adiciona_aresta("a3", "B", "C", 1)
+        self.grafo_3.adiciona_aresta("a4", "B", "D", 4)
+        self.grafo_3.adiciona_aresta("a5", "B", "E", 3)
+        self.grafo_3.adiciona_aresta("a6", "C", "E", 1)
+        self.grafo_3.adiciona_aresta("a7", "D", "F", 2)
+        self.grafo_3.adiciona_aresta("a8", "E", "D", 3)
+        self.grafo_3.adiciona_aresta("a9", "E", "F", 1)
+
+        self.grafo_4 = MeuGrafo()
+        self.grafo_4.adiciona_vertice("A")
+        self.grafo_4.adiciona_vertice("B")
+        self.grafo_4.adiciona_vertice("C")
+        self.grafo_4.adiciona_vertice("D")
+        self.grafo_4.adiciona_vertice("E")
+        self.grafo_4.adiciona_vertice("F")
+        self.grafo_4.adiciona_aresta('a1', 'A', 'B', 2)
+        self.grafo_4.adiciona_aresta('a2', 'C', 'A', 1)
+        self.grafo_4.adiciona_aresta('a3', 'C', 'B', 3)
+        self.grafo_4.adiciona_aresta('a4', 'D', 'A', 1)
+        self.grafo_4.adiciona_aresta('a5', 'D', 'C', 2)
+        self.grafo_4.adiciona_aresta("a6", 'E', 'D', 5)
+        self.grafo_4.adiciona_aresta("a7", 'E', 'C', 10)
+        self.grafo_4.adiciona_aresta("a8", 'E', 'F', 4)
+        self.grafo_4.adiciona_aresta("a9", 'F', 'A', 5)
+        self.grafo_4.adiciona_aresta("a10", 'F', 'D', 1)
+
+        self.grafo_5 = MeuGrafo()
+        self.grafo_5.adiciona_vertice("1")
+        self.grafo_5.adiciona_vertice("2")
+        self.grafo_5.adiciona_vertice("3")
+        self.grafo_5.adiciona_vertice("4")
+        self.grafo_5.adiciona_vertice("5")
+        self.grafo_5.adiciona_vertice("6")
+        self.grafo_5.adiciona_aresta('a1', '1', '2', 7)
+        self.grafo_5.adiciona_aresta('a2', '1', '3', 9)
+        self.grafo_5.adiciona_aresta('a3', '1', '6', 14)
+        self.grafo_5.adiciona_aresta('a4', '2', '3', 10)
+        self.grafo_5.adiciona_aresta('a5', '2', '4', 15)
+        self.grafo_5.adiciona_aresta('a6', '3', '4', 11)
+        self.grafo_5.adiciona_aresta('a7', '3', '6', 2)
+        self.grafo_5.adiciona_aresta('a8', '6', '5', 9)
+        self.grafo_5.adiciona_aresta("a9", '4', '5', 6)
+
+        self.grafo_6 = MeuGrafo()
+        self.grafo_6.adiciona_vertice('0')
+        self.grafo_6.adiciona_vertice('1')
+        self.grafo_6.adiciona_vertice('2')
+        self.grafo_6.adiciona_vertice('3')
+        self.grafo_6.adiciona_vertice('4')
+        self.grafo_6.adiciona_vertice('5')
+        self.grafo_6.adiciona_vertice('6')
+        self.grafo_6.adiciona_vertice('7')
+        self.grafo_6.adiciona_aresta('a1', '0', '2', 26)
+        self.grafo_6.adiciona_aresta('a2', '0', '4', 38)
+        self.grafo_6.adiciona_aresta('a3', '1', '3', 29)
+        self.grafo_6.adiciona_aresta('a4', '2', '7', 34)
+        self.grafo_6.adiciona_aresta('a5', '3', '6', 52)
+        self.grafo_6.adiciona_aresta('a6', '4', '7', 37)
+        self.grafo_6.adiciona_aresta('a7', '4', '5', 35)
+        self.grafo_6.adiciona_aresta('a8', '5', '4', 35)
+        self.grafo_6.adiciona_aresta('a9', '5', '7', 28)
+        self.grafo_6.adiciona_aresta('a10', '5', '1', 32)
+        self.grafo_6.adiciona_aresta('a11', '6', '2', 40)
+        self.grafo_6.adiciona_aresta('a12', '6', '0', 58)
+        self.grafo_6.adiciona_aresta('a13', '6', '4', 93)
+        self.grafo_6.adiciona_aresta('a14', '7', '5', 28)
+        self.grafo_6.adiciona_aresta('a15', '7', '3', 39)
+
+        self.grafo_7 = MeuGrafo()
+        self.grafo_7.adiciona_vertice('A')
+        self.grafo_7.adiciona_vertice('B')
+        self.grafo_7.adiciona_vertice('C')
+        self.grafo_7.adiciona_vertice('D')
+        self.grafo_7.adiciona_vertice('E')
+        self.grafo_7.adiciona_vertice('F')
+        self.grafo_7.adiciona_vertice('G')
+        self.grafo_7.adiciona_vertice('H')
+        self.grafo_7.adiciona_vertice('T')
+        self.grafo_7.adiciona_aresta('a1', 'A', 'F', 24)
+        self.grafo_7.adiciona_aresta('a2', 'A', 'E', 70)
+        self.grafo_7.adiciona_aresta('a3', 'D', 'H', 29)
+        self.grafo_7.adiciona_aresta('a4', 'G', 'H', 66)
+        self.grafo_7.adiciona_aresta('a5', 'F', 'D', 120)
+        self.grafo_7.adiciona_aresta('a6', 'E', 'G', 42)
+        self.grafo_7.adiciona_aresta('a7', 'A', 'C', 47)
+        self.grafo_7.adiciona_aresta('a8', 'C', 'B', 55)
+        self.grafo_7.adiciona_aresta('a9', 'B', 'H', 79)
+        self.grafo_7.adiciona_aresta('a10', 'F', 'C', 25)
+        self.grafo_7.adiciona_aresta('a11', 'C', 'E', 23)
+        self.grafo_7.adiciona_aresta('a12', 'B', 'D', 31)
+        self.grafo_7.adiciona_aresta('a13', 'B', 'G', 74)
+        self.grafo_7.adiciona_aresta('a14', 'E', 'B', 31)
+        self.grafo_7.adiciona_aresta('a15', 'C', 'G', 66)
+        self.grafo_7.adiciona_aresta('a16', 'C', 'D', 88)
+
+
+
     def test_adiciona_aresta(self):
         self.assertTrue(self.g_p.adiciona_aresta('a10', 'J', 'C'))
         a = ArestaDirecionada("zxc", self.g_p.get_vertice("C"), self.g_p.get_vertice("Z"))
@@ -191,6 +588,8 @@ class TestGrafo(unittest.TestCase):
         self.assertEqual(self.g_l4.grau_entrada('D'), 1)
         self.assertEqual(self.g_l4.grau_saida('D'), 1)
 
+
+
     def test_ha_paralelas(self):
         self.assertTrue(self.g_p.ha_paralelas())
         self.assertFalse(self.g_p_sem_paralelas.ha_paralelas())
@@ -210,3 +609,72 @@ class TestGrafo(unittest.TestCase):
         with self.assertRaises(VerticeInvalidoError):
             self.g_p.arestas_sobre_vertice('A')
         self.assertEqual(set(self.g_e.arestas_sobre_vertice('D')), {'5', '6', '7', '8'})
+
+
+    def test_warshall(self):
+        self.assertEqual(self.g_p_sem_paralelas.warshall(), self.g_p_sem_paralelas_matriz)
+        self.assertEqual(self.g_p.warshall(), self.g_p_matriz)
+        self.assertEqual(self.g_k4.warshall(), self.g_k4_matriz)
+        self.assertEqual(self.g_c_c.warshall(), self.g_c_c_matriz)
+        self.assertEqual(self.grafo_ap_l_1.warshall(), self.grafo_ap_l_1_matriz)
+        self.assertEqual(self.g_e.warshall(), self.g_e_matriz)
+        self.assertEqual(self.g_c_l_2.warshall(), self.g_c_l_2_matriz)
+        self.assertEqual(self.g_l1.warshall(), self.g_l1_matriz)
+        self.assertEqual(self.g_ap_l_2.warshall(), self.g_ap_l_2_matriz)
+        self.assertEqual(self.g_ap_l_3.warshall(), self.g_ap_l_3_matriz)
+
+    def test_dijkstra(self):
+        self.assertEqual(self.grafo_1.dijkstra('A', 'E'), ['A', 'B', 'C', 'E'])
+        self.assertEqual(self.grafo_2.dijkstra('A', 'E'), ['A', 'C', 'D', 'E'])
+        self.assertEqual(self.grafo_3.dijkstra('A', 'F'), ['A', 'B', 'C', 'E', 'F'])
+        self.assertEqual(self.grafo_4.dijkstra('E', 'B'), ['E', 'F', 'D', 'A', 'B'])
+        self.assertEqual(self.grafo_5.dijkstra('1', '5'), ['1', '3', '6', '5'])
+        self.assertEqual(self.grafo_6.dijkstra('0', '6'), ['0', '2', '7', '3', '6'])
+        with self.assertRaises(VerticeInvalidoError):
+            self.assertEqual(self.grafo_6.dijkstra('0', '8'), VerticeInvalidoError)
+        with self.assertRaises(VerticeInvalidoError):
+            self.assertEqual(self.grafo_3.dijkstra('G', 'C'), VerticeInvalidoError)
+        with self.assertRaises(RuntimeError):
+            self.assertEqual(self.grafo_7.dijkstra('A', 'T'), RuntimeError)
+        with self.assertRaises(RuntimeError):
+            self.assertEqual(self.grafo_1.dijkstra('C', 'B'), RuntimeError)
+
+    def cria_matriz(self, grafo: MeuGrafo):
+        ordem_matriz = len(grafo._vertices)
+        nova_matriz = list()
+
+        for i in range(ordem_matriz):
+            nova_matriz.append(list())
+            for j in range(ordem_matriz):
+                nova_matriz[i].append(0)
+
+        return nova_matriz
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
