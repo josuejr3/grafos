@@ -191,7 +191,8 @@ class MeuGrafo(GrafoMatrizAdjacenciaDirecionado):
                     visitado[w] = 1
                     break
 
-
+    def bellman_ford(self, vi, vf):
+        ...
 
 
 
