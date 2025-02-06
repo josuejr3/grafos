@@ -191,8 +191,55 @@ class MeuGrafo(GrafoMatrizAdjacenciaDirecionado):
                     visitado[w] = 1
                     break
 
-    def bellman_ford(self, vi, vf):
-        ...
+
+
+
+    def bellman_ford(self, vi: str, vf: str):
+
+        # Verificando se os dois vértices existem.
+        if not self.existe_rotulo_vertice(vi) or not self.existe_rotulo_vertice(vf):
+            raise VerticeInvalidoError
+
+        # Definindo tamanho da matriz e os vertices
+        dimensao_matriz = len(self.matriz)
+        vertices = [v.rotulo for v in self.vertices]
+
+        beta = {chave: "inf" for chave in vertices}; beta[vi] = 0
+        predecessor = {chave: None for chave in vertices}
+
+        arestas_totais = list()
+
+        for i in range(len(vertices)):
+            arestas_no_vertice = self.arestas_sobre_vertice(vertices[i])
+            for a in arestas_no_vertice:
+                if a not in arestas_totais:
+                    arestas_totais.append(a)
+
+        for k in range(dimensao_matriz - 1):
+
+            for a in arestas_totais:
+
+                # informações da aresta
+                aresta_rotulo = a.rotulo
+                aresta_peso = a.peso
+                v1_aresta = a.v1.rotulo
+                v2_aresta = a.v2.rotulo
+
+                # Se a aresta não possui valor, ela é pulada
+                if beta[v1_aresta] == "inf":
+                    continue
+
+                if beta[v2_aresta] == "inf" or beta[v2_aresta] >= beta[v1_aresta] + aresta_peso:
+                    beta[v2_aresta] = beta[v1_aresta] + aresta_peso
+                    predecessor[v2_aresta] = v1_aresta
+
+
+        return predecessor
+
+
+
+
+
 
 
 

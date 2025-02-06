@@ -2,3 +2,4 @@ venv
 .idea
 test_json/
 __pycache__
+teste.py
