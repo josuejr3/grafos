@@ -786,6 +786,7 @@ class TestGrafo(unittest.TestCase):
         self.assertFalse(self.grafo_7bf.bellman_ford('1', '3'))
 
 
+
     def cria_matriz(self, grafo: MeuGrafo):
         ordem_matriz = len(grafo._vertices)
         nova_matriz = list()
