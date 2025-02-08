@@ -250,7 +250,6 @@ class MeuGrafo(GrafoMatrizAdjacenciaDirecionado):
                     beta[v2_aresta] = beta[v1_aresta] + aresta_peso
                     predecessor[v2_aresta] = v1_aresta
 
-
         # Laço para verificar se há ciclo negativo.
 
         for a in arestas_totais:
