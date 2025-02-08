@@ -124,7 +124,15 @@ class MeuGrafo(GrafoMatrizAdjacenciaDirecionado):
 
         return self
 
-    def dijkstra(self, vi, vf):
+    def dijkstra(self, vi: str, vf: str) :
+
+        """
+        :param vi: vértice inicial
+        :param vf: vértice final
+        :return: uma lista com os vértices que formam o menor cominho
+        :raises: VerticeInvalidoError se um dos vértices não existirem no grafo
+        :raise: RuntimeError se não existir um caminho
+        """
 
         # Conferindo se os dois vértices de entrada e saída existem
         if not self.existe_rotulo_vertice(vi) or not self.existe_rotulo_vertice(vf):
@@ -192,9 +200,17 @@ class MeuGrafo(GrafoMatrizAdjacenciaDirecionado):
                     break
 
 
+    def bellman_ford(self, vi: str, vf: str) -> bool | list[str]:
 
+        """
+        Encontra o menor caminho entre dois vértices considerando pesos negativos
+        :param vi: vértice inicial
+        :param vf: vértice final
+        :return: uma lista com os vértices que formam o menor caminho, ou False se o caminho não existir
+        ou houver ciclos negativos
+        :raises VerticeInvalidoError se um dos vértices não existir no grafo
+        """
 
-    def bellman_ford(self, vi: str, vf: str):
 
         # Verificando se os dois vértices existem.
         if not self.existe_rotulo_vertice(vi) or not self.existe_rotulo_vertice(vf):
@@ -204,7 +220,8 @@ class MeuGrafo(GrafoMatrizAdjacenciaDirecionado):
         dimensao_matriz = len(self.matriz)
         vertices = [v.rotulo for v in self.vertices]
 
-        beta = {chave: "inf" for chave in vertices}; beta[vi] = 0
+
+        beta = {chave: float("inf") for chave in vertices}; beta[vi] = 0
         predecessor = {chave: None for chave in vertices}
 
         arestas_totais = list()
@@ -220,21 +237,39 @@ class MeuGrafo(GrafoMatrizAdjacenciaDirecionado):
             for a in arestas_totais:
 
                 # informações da aresta
-                aresta_rotulo = a.rotulo
+                # aresta_rotulo = a.rotulo
                 aresta_peso = a.peso
                 v1_aresta = a.v1.rotulo
                 v2_aresta = a.v2.rotulo
 
                 # Se a aresta não possui valor, ela é pulada
-                if beta[v1_aresta] == "inf":
+                if beta[v1_aresta] == float("inf"):
                     continue
 
-                if beta[v2_aresta] == "inf" or beta[v2_aresta] >= beta[v1_aresta] + aresta_peso:
+                if beta[v2_aresta] == float("inf") or beta[v2_aresta] > beta[v1_aresta] + aresta_peso:
                     beta[v2_aresta] = beta[v1_aresta] + aresta_peso
                     predecessor[v2_aresta] = v1_aresta
 
 
-        return predecessor
+        # Laço para verificar se há ciclo negativo.
+
+        for a in arestas_totais:
+            if beta[a.v1.rotulo] != float("inf") and beta[a.v2.rotulo] > beta[a.v1.rotulo] + a.peso:
+                return False
+
+        if beta[vf] == float("inf"):
+            return None
+
+        # Construindo o menor caminho
+        menor_caminho = list()
+        atual = vf
+
+        while atual is not None:
+            menor_caminho.append(atual)
+            atual = predecessor[atual]
+
+        menor_caminho.reverse()
+        return menor_caminho
 
 
 

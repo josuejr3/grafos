@@ -1,0 +1,2 @@
+bibgrafo==2.0.1
+multipledispatch==1.0.0
