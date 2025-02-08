@@ -1,5 +1,6 @@
 venv
 .idea
-test_json/
-__pycache__
+main.py
+test_json
 teste.py
+gerar_grafos_teste.py
